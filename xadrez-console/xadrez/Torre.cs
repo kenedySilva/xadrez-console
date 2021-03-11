@@ -1,5 +1,5 @@
-﻿using xadrez_console.tabuleiro;
-namespace xadrez_console.xadrez
+﻿using tabuleiro;
+namespace xadrez
 {
     class Torre : Peca
     {

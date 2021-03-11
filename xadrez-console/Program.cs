@@ -1,8 +1,6 @@
 ﻿using System;
-using xadrez_console;
-using xadrez_console.tabuleiro;
-using xadrez_console.tabuleiro.exception;
-using xadrez_console.xadrez;
+using tabuleiro;
+using xadrez;
 namespace xadrez_console
 {
     class Program
@@ -11,17 +9,28 @@ namespace xadrez_console
         {
             try
             {
-                Tabuleiro tab = new Tabuleiro(8, 8);
+                PartidaDeXadrez partida = new PartidaDeXadrez();
+                while (!partida.terminada)
+                {
+                    Console.Clear();
+                    Tela.imprimirTabuleiro(partida.tab);
+                    Console.WriteLine();
+                    Console.Write("Origem: ");
+                    Posicao origem = Tela.lerPosicaoXadrez().toposicao();
+                    Console.Write("Destino: ");
+                    Posicao destino = Tela.lerPosicaoXadrez().toposicao();
 
-                tab.coloarPeca(new Torre(tab, Cor.Preta), new Posicao(0, 0));
-                tab.coloarPeca(new Rei(tab, Cor.Preta), new Posicao(0, 2));
-                tab.coloarPeca(new Torre(tab, Cor.Branca), new Posicao(1, 3));
-                tab.coloarPeca(new Rei(tab, Cor.Branca), new Posicao(2, 4));
-
-                Tela.imprimirTabuleiro(tab);
+                    partida.executaMovimento(origem, destino);
+                }
             }
             catch (TabuleiroException e)
-            { Console.WriteLine(e.Message); }
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erro inesperado: " + e.Message);
+            }
         }
     }
 }
